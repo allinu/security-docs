@@ -1,17 +1,106 @@
 /* 网络安全漏洞情报站 — 展示增强样式 */
 
+/* ===== 中文字体：Smartisan Compact 系列（CDN） ===== */
+@font-face {
+    font-family: "SCR";
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Regular.woff2") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCT";
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Thin.woff2") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCL";
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Light.woff2") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCM";
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Medium.woff2") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCB";
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Bold.woff2") format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SCH";
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Heavy.woff2") format("truetype");
+    font-display: swap;
+}
+
+/* ===== 字体应用（按字重映射） ===== */
+:root,
+.md-typeset {
+    --md-text-font-family: "SCR", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    --md-code-font-family: "SCM", "JetBrains Mono", "SFMono-Regular", Consolas, "Courier New", monospace;
+}
+
+.md-typeset {
+    font-family: "SCR", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+
+.md-typeset strong,
+.md-typeset b,
+.md-typeset .admonition-title,
+.md-typeset summary {
+    font-family: "SCB", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.md-typeset h1 { font-family: "SCH", "PingFang SC", "Microsoft YaHei", sans-serif; }
+.md-typeset h2 { font-family: "SCB", "PingFang SC", "Microsoft YaHei", sans-serif; }
+.md-typeset h3 { font-family: "SCM", "PingFang SC", "Microsoft YaHei", sans-serif; }
+.md-typeset h4 { font-family: "SCM", "PingFang SC", "Microsoft YaHei", sans-serif; }
+
+.md-nav,
+.md-header,
+.md-footer,
+.md-search__form {
+    font-family: "SCR", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/* ===== 减小页面字号 ===== */
+.md-typeset {
+    font-size: 0.72rem; /* 默认 0.8rem */
+    line-height: 1.55;
+}
+
+.md-typeset h1 { font-size: 1.45rem; }
+.md-typeset h2 { font-size: 1.15rem; }
+.md-typeset h3 { font-size: 0.98rem; }
+.md-typeset h4 { font-size: 0.9rem; }
+
+.md-nav__title,
+.md-nav__link { font-size: 0.72rem; }
+.md-header__title { font-size: 0.85rem; }
+
+.md-typeset .admonition,
+.md-typeset details { font-size: 0.7rem; }
+.md-typeset blockquote { font-size: 0.7rem; }
+
 /* 表格优化：小字号、行悬停、边框 */
 .md-typeset table:not([class]) {
-  font-size: 0.78rem;
+  font-size: 0.68rem;
 }
 .md-typeset table:not([class]) tbody tr:hover {
   background-color: var(--md-accent-fg-color--transparent, rgba(255, 82, 82, 0.06));
 }
 
-/* 代码块：横向滚动 + 圆角 */
+/* 代码块：横向滚动 + 圆角 + 小字号 */
 .md-typeset pre > code {
   border-radius: 0.25rem;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
+}
+.md-typeset code {
+  font-family: var(--md-code-font-family);
 }
 
 /* 自定义 POC 信息卡（配合 !!! tip 使用，强化 POC 区块辨识度） */
