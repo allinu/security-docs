@@ -1,5 +1,5 @@
 site_name: 网络安全漏洞情报
-site_description: 每日网络安全漏洞文档 — 自动采集、整理与推送
+site_description: 每日网络安全漏洞文档 — 自动采集、POC 整理、推送
 site_url: https://docs.allinu.eu.org
 repo_url: https://github.com/allinu/security-docs
 repo_name: security-docs
@@ -11,10 +11,14 @@ theme:
     - navigation.top
     - navigation.tracking
     - navigation.expand
+    - navigation.sections
+    - navigation.footer
     - toc.integrate
     - search.suggest
     - search.highlight
     - content.code.annotate
+    - content.code.copy
+    - content.tabs.link
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -33,23 +37,44 @@ theme:
   icon:
     repo: fontawesome/brands/github
 
+extra_css:
+  - assets/extra.css
+
 markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
   - tables
+  - toc:
+      permalink: true
   - pymdownx.details
   - pymdownx.superfences
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.keys
 
 plugins:
   - search:
       lang: zh
+  - optimize:
+      optimize_png: true
+      optimize_png_speed: 5
+      optimize_png_strip: true
+      optimize_jpg: true
+      optimize_jpg_quality: 75
+      optimize_jpg_progressive: true
+      print_gain: false
   - minify:
       minify_html: true
 
@@ -57,3 +82,4 @@ nav:
   - 首页: index.md
   - 漏洞情报:
       - 每日漏洞: vulnerabilities/index.md
+      - 每日归档: "vulnerabilities/*.md"

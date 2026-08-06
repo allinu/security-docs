@@ -1,0 +1,44 @@
+/* 网络安全漏洞情报站 — 展示增强样式 */
+
+/* 表格优化：小字号、行悬停、边框 */
+.md-typeset table:not([class]) {
+  font-size: 0.78rem;
+}
+.md-typeset table:not([class]) tbody tr:hover {
+  background-color: var(--md-accent-fg-color--transparent, rgba(255, 82, 82, 0.06));
+}
+
+/* 代码块：横向滚动 + 圆角 */
+.md-typeset pre > code {
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* 自定义 POC 信息卡（配合 !!! tip 使用，强化 POC 区块辨识度） */
+.md-typeset .admonition.poc,
+.md-typeset details.poc {
+  border-color: #9c27b0;
+}
+.md-typeset .admonition.poc > .admonition-title,
+.md-typeset details.poc > summary {
+  background-color: rgba(156, 39, 176, 0.1);
+  border-color: #9c27b0;
+}
+
+/* CVE 编号高亮（正文中直接书写 CVE-XXXX 时便于扫描） */
+.md-typeset code.cve {
+  color: #d81b60;
+  font-weight: 600;
+}
+
+/* 标签页内容间距 */
+.md-typeset .tabbed-set {
+  margin-top: 0.6rem;
+}
+
+/* 打印时展开所有折叠块 */
+@media print {
+  .md-typeset details {
+    display: block;
+  }
+}
