@@ -13,7 +13,6 @@ theme:
     - navigation.expand
     - navigation.sections
     - navigation.footer
-    - toc.integrate
     - search.suggest
     - search.highlight
     - content.code.annotate
