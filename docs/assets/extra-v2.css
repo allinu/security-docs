@@ -41,7 +41,7 @@
 :root,
 .md-typeset {
     --md-text-font-family: "SCR", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-    --md-code-font-family: "SCM", "JetBrains Mono", "SFMono-Regular", Consolas, "Courier New", monospace;
+    --md-code-font-family: "Maple Mono NF CN", "SCM", "JetBrains Mono", "SFMono-Regular", Consolas, "Courier New", monospace;
 }
 
 .md-typeset {
@@ -96,13 +96,14 @@
   background-color: var(--md-accent-fg-color--transparent, rgba(255, 82, 82, 0.06));
 }
 
-/* 代码块：横向滚动 + 圆角 + 小字号 */
+/* 代码块：横向滚动 + 圆角 + 小字号（Maple Mono NF CN） */
 .md-typeset pre > code {
   border-radius: 0.25rem;
-  font-size: 0.68rem;
+  font-size: 0.6rem; /* 0.68 → 减小 */
 }
 .md-typeset code {
   font-family: var(--md-code-font-family);
+  font-size: 0.62rem; /* 行内代码略小于正文 */
 }
 
 /* 自定义 POC 信息卡（配合 !!! tip 使用，强化 POC 区块辨识度） */

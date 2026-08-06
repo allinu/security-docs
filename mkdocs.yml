@@ -79,6 +79,9 @@ plugins:
   - minify:
       minify_html: true
 
+hooks:
+  - hooks/head_inject.py
+
 nav:
   - 首页: index.md
   - 漏洞情报:
