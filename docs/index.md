@@ -18,5 +18,5 @@
 ## 最近更新
 
 <!-- LATEST_ENTRIES_START -->
-- 暂无数据
+- [2026-08-06 网络安全漏洞情报](vulnerabilities/2026-08-06.md)
 <!-- LATEST_ENTRIES_END -->

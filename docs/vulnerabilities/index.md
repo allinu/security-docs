@@ -5,5 +5,5 @@
 ## 目录
 
 <!-- DAILY_INDEX_START -->
-- 暂无数据
+- [2026-08-06](2026-08-06.md)
 <!-- DAILY_INDEX_END -->
