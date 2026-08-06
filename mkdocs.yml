@@ -75,6 +75,7 @@ plugins:
       optimize_jpg_quality: 75
       optimize_jpg_progressive: true
       print_gain: false
+      cache: false
   - minify:
       minify_html: true
 

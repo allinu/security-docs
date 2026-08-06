@@ -6,6 +6,7 @@ venv/
 
 # MkDocs 构建产物
 site/
+.cache/
 
 # 系统文件
 .DS_Store
