@@ -96,6 +96,11 @@
 .md-typeset table:not([class]) td {
   padding: 0.55em 0.8em; /* 默认 0.9375em 1.25em → 适当缩小 */
 }
+/* 减小表头最小宽度（默认 5rem）：避免 9 列宽表（重点漏洞清单/风险台账）横向溢出，
+   使其与其他表格一致地满宽自适应显示 */
+.md-typeset table:not([class]) th {
+  min-width: 2.5rem;
+}
 .md-typeset table:not([class]) tbody tr:hover {
   background-color: var(--md-accent-fg-color--transparent, rgba(255, 82, 82, 0.06));
 }
