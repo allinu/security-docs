@@ -1,0 +1,59 @@
+site_name: 网络安全漏洞情报
+site_description: 每日网络安全漏洞文档 — 自动采集、整理与推送
+site_url: https://docs.allinu.eu.org
+repo_url: https://github.com/allinu/security-docs
+repo_name: security-docs
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.top
+    - navigation.tracking
+    - navigation.expand
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.code.annotate
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: red
+      toggle:
+        icon: material/weather-night
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: red
+      toggle:
+        icon: material/weather-sunny
+        name: 切换到浅色模式
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - search:
+      lang: zh
+  - minify:
+      minify_html: true
+
+nav:
+  - 首页: index.md
+  - 漏洞情报:
+      - 每日漏洞: vulnerabilities/index.md
