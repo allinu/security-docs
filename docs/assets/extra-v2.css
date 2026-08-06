@@ -67,30 +67,35 @@
     font-family: "SCR", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
-/* ===== 减小页面字号 ===== */
+/* ===== 页面字号 ===== */
 .md-typeset {
-    font-size: 0.68rem; /* 0.72rem → 进一步缩小 */
+    font-size: 0.72rem; /* 0.68 → 适当增加 */
     line-height: 1.55;
 }
 
-.md-typeset h1 { font-size: 1.28rem; }  /* 1.45 → 缩小 */
-.md-typeset h2 { font-size: 1.02rem; }  /* 1.15 → 缩小 */
-.md-typeset h3 { font-size: 0.9rem; }   /* 0.98 → 缩小 */
-.md-typeset h4 { font-size: 0.84rem; }  /* 0.90 → 缩小 */
+.md-typeset h1 { font-size: 1.34rem; }  /* 1.28 → 增加 */
+.md-typeset h2 { font-size: 1.08rem; }  /* 1.02 → 增加 */
+.md-typeset h3 { font-size: 0.94rem; }  /* 0.90 → 增加 */
+.md-typeset h4 { font-size: 0.88rem; }  /* 0.84 → 增加 */
 
-/* 正文内链接进一步缩小 */
-.md-typeset a { font-size: 0.64rem; }
+/* 正文内链接 */
+.md-typeset a { font-size: 0.68rem; }   /* 0.64 → 增加 */
 
 .md-nav__title,
 .md-nav__link { font-size: 0.72rem; }
-.md-sidebar--secondary .md-nav__link { font-size: 0.66rem; } /* 右侧 TOC 进一步缩小 */
+.md-sidebar--secondary .md-nav__link { font-size: 0.68rem; } /* 右侧 TOC 0.66 → 增加 */
 .md-header__title { font-size: 0.85rem; }
 
-/* 提示块/引用：改回默认字号（跟随正文，不单独设置） */
+/* 提示块/引用：锁定字号，不随正文变化 */
+.md-typeset .admonition,
+.md-typeset details,
+.md-typeset blockquote {
+  font-size: 0.68rem;
+}
 
 /* 表格优化：小字号、紧凑 padding、行悬停 */
 .md-typeset table:not([class]) {
-  font-size: 0.64rem; /* 0.68rem → 进一步缩小 */
+  font-size: 0.66rem; /* 0.64 → 增加 */
 }
 .md-typeset table:not([class]) th,
 .md-typeset table:not([class]) td {
@@ -108,11 +113,11 @@
 /* 代码块：横向滚动 + 圆角 + 小字号（Maple Mono NF CN） */
 .md-typeset pre > code {
   border-radius: 0.25rem;
-  font-size: 0.6rem; /* 0.68 → 减小 */
+  font-size: 0.62rem; /* 0.60 → 增加 */
 }
 .md-typeset code {
   font-family: var(--md-code-font-family);
-  font-size: 0.62rem; /* 行内代码略小于正文 */
+  font-size: 0.64rem; /* 行内代码 0.62 → 增加 */
 }
 
 /* 自定义 POC 信息卡（配合 !!! tip 使用，强化 POC 区块辨识度） */
