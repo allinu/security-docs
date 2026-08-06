@@ -82,4 +82,3 @@ nav:
   - 首页: index.md
   - 漏洞情报:
       - 每日漏洞: vulnerabilities/index.md
-      - 每日归档: "vulnerabilities/*.md"
