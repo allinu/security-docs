@@ -184,7 +184,7 @@ tags:
 - [ ] 存在破坏性或持久化行为
 - [ ] 存在可疑外联或供应链风险
 
-??? warning "PoC代码或验证请求"
+???+ warning "PoC代码或验证请求"
 
     ```http
     {{仅填写无害化、已授权验证请求；不填写破坏性载荷}}
@@ -250,7 +250,7 @@ tags:
 | URL | `{{https://example.com/path}}` | {{恶意载荷地址}} | {{高/中/低}} |
 | SHA256 | `{{hash}}` | {{恶意文件}} | {{高/中/低}} |
 
-??? example "Sigma / YARA / Snort / Suricata规则"
+???+ example "Sigma / YARA / Snort / Suricata规则"
 
 ```yaml
 # 在此填写检测规则或规则链接
