@@ -18,6 +18,7 @@
 ## 最近更新
 
 <!-- LATEST_ENTRIES_START -->
+- [2026-08-07 网络安全漏洞情报](vulnerabilities/2026-08-07.md)
 - [2026-08-06 网络安全漏洞情报](vulnerabilities/2026-08-06.md)
 - [2026-08-05 网络安全漏洞情报](vulnerabilities/2026-08-05.md)
 - [2026-08-04 网络安全漏洞情报](vulnerabilities/2026-08-04.md)
