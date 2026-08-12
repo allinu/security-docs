@@ -18,12 +18,11 @@
 ## 最近更新
 
 <!-- LATEST_ENTRIES_START -->
+- [2026-08-12 网络安全漏洞情报](vulnerabilities/2026-08-12.md)
 - [2026-08-11 网络安全漏洞情报](vulnerabilities/2026-08-11.md)
 - [2026-08-10 网络安全漏洞情报](vulnerabilities/2026-08-10.md)
 - [2026-08-09 网络安全漏洞情报](vulnerabilities/2026-08-09.md)
 - [2026-08-08 网络安全漏洞情报](vulnerabilities/2026-08-08.md)
 - [2026-08-07 网络安全漏洞情报](vulnerabilities/2026-08-07.md)
 - [2026-08-06 网络安全漏洞情报](vulnerabilities/2026-08-06.md)
-- [2026-08-05 网络安全漏洞情报](vulnerabilities/2026-08-05.md)
-- [2026-08-04 网络安全漏洞情报](vulnerabilities/2026-08-04.md)
 <!-- LATEST_ENTRIES_END -->
