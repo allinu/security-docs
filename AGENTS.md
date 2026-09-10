@@ -35,6 +35,6 @@
 ## 样式与配置约定
 
 - 站点样式统一在 `docs/assets/extra-v2.css`（文件名带版本号，用于绕过 CDN 缓存；改样式优先改此文件，勿新建 `extra.css`）。
-- 页面级注入（代码字体 preload、Cloudflare Web Analytics 等）：`hooks/head_inject.py`。
+- 页面级注入：`hooks/head_inject.py`，目前包含三部分——Google tag (gtag.js, GA4) 注入 `<head>` 顶部、Maple Mono NF CN 字体 preload（FontsAPI）、Cloudflare Web Analytics 信标（`</body>` 前）。
   Material 9.7+ 已重写主题系统，传统的 `overrides/partials/head.html`（`extends base.html`）覆盖方式失效，必须用 MkDocs hooks。
 - 不要修改（除非任务明确要求）：`daily_templates.md`（模板规范）、`follow.opml`（RSS 订阅）、`mkdocs.yml`（构建配置）。
