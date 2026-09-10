@@ -18,6 +18,8 @@
     server_name docs.allinu.eu.org / root /home/ubuntu/docs-site/site
 ```
 
+**副作用提示**：WAF 人机验证对所有无 JS 的客户端返回 468，因此搜索引擎收录、IM 链接预览、Google Analytics 后台的「检测 Google 代码」等第三方验证都会失败——这属于 WAF 行为，不是站点/代码问题（代码正确性以源站回源口输出为准）。真人浏览器可自动通过 JS 挑战。
+
 ## 发布确认规范
 
 - **权威校验（判断发布成功与否以此为准）**：
