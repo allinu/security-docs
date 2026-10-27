@@ -15,7 +15,7 @@ tags:
 > **统计周期：** {{YYYY-MM-DD HH:mm}} 至 {{YYYY-MM-DD HH:mm}}  
 > **情报等级：** {{常规 / 重要 / 紧急}}  
 > **编制单位：** {{单位名称}}  
-> **数据来源：** NVD、CISA、CNVD、CNNVD、厂商公告、GitHub及公开威胁情报平台
+> **数据来源：** NVD、CISA、CNVD、CNNVD、厂商公告、GitHub、[漏洞情报多源汇总](http://3.25.211.44:8080/report.html)及公开威胁情报平台
 
 ---
 
