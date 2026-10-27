@@ -1,39 +1,54 @@
 /* 网络安全漏洞情报站 — 展示增强样式 */
 
-/* ===== 中文字体：Smartisan Compact 系列（CDN） ===== */
+/* ===== 中文字体：Smartisan Compact 系列（CDN） =====
+   每个字面是独立的 font-family，必须显式声明 font-weight，
+   否则浏览器按 400 处理，遇到 font-weight:700 的元素会在此字形上
+   再叠加一层“合成加粗”（faux bold），笔画糊在一起。 */
 @font-face {
     font-family: "SCR";
-    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Regular.woff2") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: "SCT";
-    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Thin.woff2") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Thin.woff2") format("woff2");
+    font-weight: 100;
+    font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: "SCL";
-    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Light.woff2") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Light.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: "SCM";
-    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Medium.woff2") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: "SCB";
-    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Bold.woff2") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: "SCH";
-    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Heavy.woff2") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/allinu/TMP@main/fonts/Smartisan_Compact-Heavy.woff2") format("woff2");
+    font-weight: 900;
+    font-style: normal;
     font-display: swap;
 }
 
@@ -46,25 +61,58 @@
 
 .md-typeset {
     font-family: "SCR", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    /* 只禁用“合成加粗”：粗体必须由 SCB/SCH 字面表达，不给常规字面描边；
+       斜体保持可合成（该字体家族无斜体字面），避免 <em> 变成正体 */
+    font-synthesis-weight: none;
 }
 
+/* ===== 粗体：统一使用 SCB 字面 =====
+   SCB 已是 Bold 字形（font-weight:700），这里把字重与字形对齐，
+   并显式禁用合成，确保“加粗”只发生一次。 */
 .md-typeset strong,
 .md-typeset b,
+.md-typeset th,
+.md-typeset dt,
+.md-typeset legend,
 .md-typeset .admonition-title,
+.md-typeset details > summary,
 .md-typeset summary {
     font-family: "SCB", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-weight: 700;
 }
 
-.md-typeset h1 { font-family: "SCH", "PingFang SC", "Microsoft YaHei", sans-serif; }
-.md-typeset h2 { font-family: "SCB", "PingFang SC", "Microsoft YaHei", sans-serif; }
-.md-typeset h3 { font-family: "SCM", "PingFang SC", "Microsoft YaHei", sans-serif; }
-.md-typeset h4 { font-family: "SCM", "PingFang SC", "Microsoft YaHei", sans-serif; }
+/* 标题：各用对应字面，字重与字面一致，避免二次加粗 */
+.md-typeset h1 {
+    font-family: "SCH", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-weight: 900;
+}
+
+.md-typeset h2 {
+    font-family: "SCB", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-weight: 700;
+}
+
+.md-typeset h3,
+.md-typeset h4 {
+    font-family: "SCM", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-weight: 500;
+}
 
 .md-nav,
 .md-header,
 .md-footer,
 .md-search__form {
     font-family: "SCR", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/* 导航中的“加粗”元素同样走 SCB，而不是给 SCR 描边 */
+.md-nav__title,
+.md-nav__item--active > .md-nav__link,
+.md-nav__link--active,
+.md-header__title,
+.md-tabs__item--active .md-tabs__link {
+    font-family: "SCB", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-weight: 700;
 }
 
 /* ===== 页面字号 ===== */
@@ -119,6 +167,13 @@
   font-family: var(--md-code-font-family);
   font-size: 0.64rem; /* 行内代码 0.62 → 增加 */
 }
+/* 代码等宽字体只有常规字面，粗体代码改为换字重而非合成，
+   避免与中文 SCB 撞字重导致同一行忽粗忽细 */
+.md-typeset strong code,
+.md-typeset code strong,
+.md-typeset pre > code b {
+  font-weight: 500;
+}
 
 /* 自定义 POC 信息卡（配合 !!! tip 使用，强化 POC 区块辨识度） */
 .md-typeset .admonition.poc,
@@ -134,7 +189,7 @@
 /* CVE 编号高亮（正文中直接书写 CVE-XXXX 时便于扫描） */
 .md-typeset code.cve {
   color: #d81b60;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* 标签页内容间距 */
