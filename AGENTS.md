@@ -5,6 +5,7 @@
 - MkDocs Material 站点，源码在本仓库；构建产物 `site/` 由 nginx 直接服务。
 - 构建命令：`cd /home/ubuntu/docs-site && ./.venv/bin/mkdocs build`（exit code 必须为 0）。
 - 每日日报：`docs/vulnerabilities/YYYY-MM-DD.md`，必须严格按 `daily_templates.md` 模板生成。
+- 日报新增信息源：`http://3.25.211.44:8080/report.html`（多源漏洞情报汇总）。生成日报时先保存/记录页面的“生成时间”，从其 `detail-data` JSON 中按目标日期的 `published` 字段筛选；页面为聚合源，CVSS、KEV、PoC 与修复结论须保留其来源边界，并以页面列出的厂商公告、NVD、CISA 等原始链接复核。页面未标记 KEV/PoC 只能表述为“快照未标记”，不得推断为不存在。
 - 站点地址：https://docs.allinu.eu.org
 
 ## 部署链路（重要！）
