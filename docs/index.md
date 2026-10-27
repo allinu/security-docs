@@ -7,7 +7,7 @@
 本站基于 [MkDocs Material](https://squidfunk.github.io/mkdocs-material/) 构建，
 由 Hermes 定时任务每日自动更新：
 
-1. **采集** — 从 RSS 订阅源（安全内参、CNVD、微步、奇安信 CERT、绿盟等）抓取最新网络安全漏洞与情报
+1. **采集** — 从 RSS 订阅源（安全内参、CNVD、微步、奇安信 CERT、绿盟等）及 [VulnHOT](https://vulnhot.com/) 的精选 API/RSS 获取最新漏洞情报，并回溯原始来源核验
 2. **编写** — 由 AI 整理为结构化 Markdown 文档
 3. **发布** — 自动构建站点并推送到 GitHub 仓库同步
 
