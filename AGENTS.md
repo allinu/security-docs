@@ -5,7 +5,7 @@
 - MkDocs Material 站点，源码在本仓库；构建产物 `site/` 由 nginx 直接服务。
 - 构建命令：`cd /home/ubuntu/docs-site && ./.venv/bin/mkdocs build`（exit code 必须为 0）。
 - 每日日报：`docs/vulnerabilities/YYYY-MM-DD.md`，必须严格按 `daily_templates.md` 模板生成。
-- 多源汇总补充：`http://3.25.211.44:8080/report.html` 为聚合信息源。对既有日报必须先保持原报告统计周期和完整结构，再从页面 `detail-data` JSON 以 `published`/`modified` 时间筛选窗口内记录；已收录 CVE 补充 PoC、KEV、EPSS 和原始链接，未收录但具风险或公开 PoC 的 CVE 按日报既有“漏洞详情”或“其他漏洞简报”结构补齐。页面未标记 PoC/KEV 只能写作“快照未标记”，不得推断为不存在。
+- 多源汇总补充：`http://3.25.211.44:8080/report.html` 是 **NVD、CISA KEV、FIRST EPSS、OSV.dev、Exploit-DB、Nuclei、Metasploit、GitHub** 的聚合去重层，不是第九类独立统计源。以 CVE ID 为主键去重，保留各原始来源归属；对既有日报先保持原报告统计周期和完整结构，再从页面 `detail-data` JSON 以 `published`/`modified` 时间筛选窗口内记录。已收录 CVE 补充 PoC、KEV、EPSS 和原始链接，未收录但具风险或公开 PoC 的 CVE 按日报既有“漏洞详情”或“其他漏洞简报”结构补齐。页面未标记 PoC/KEV 只能写作“快照未标记”，不得推断为不存在。
 - 站点地址：https://docs.allinu.eu.org
 
 ## 部署链路（重要！）

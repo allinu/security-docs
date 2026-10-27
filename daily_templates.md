@@ -17,7 +17,7 @@ tags:
 > **编制单位：** {{单位名称}}  
 > **数据来源：** NVD、CISA、CNVD、CNNVD、厂商公告、GitHub、[漏洞情报多源汇总](http://3.25.211.44:8080/report.html)及公开威胁情报平台
 
-> **多源汇总合并规则：** 先保留本期既定统计窗口、统计口径和章节结构，再使用汇总页 `detail-data` JSON 按 `published` 与 `modified` 筛选窗口内记录。已有 CVE 仅增补经核验的 PoC/KEV/EPSS/原始链接；未收录但具有足够风险或公开 PoC 的 CVE，必须依照本模板写入“漏洞详情”或“其他漏洞简报”，并同步更新统计、处置建议和风险台账。记录快照生成时间；“未标记”不得写成“不存在”。
+> **多源汇总合并规则：** 汇总页是 **NVD、CISA KEV、FIRST EPSS、OSV.dev、Exploit-DB、Nuclei、Metasploit、GitHub** 的聚合去重视图，不作为独立第九源计数。先保留本期既定统计窗口、统计口径和章节结构，再使用 `detail-data` JSON 按 `published` 与 `modified` 筛选窗口内记录；以 CVE ID 为主键去重，保留命中的原始来源。已有 CVE 仅增补经核验的 PoC/KEV/EPSS/原始链接；未收录但具有足够风险或公开 PoC 的 CVE，必须依照本模板写入“漏洞详情”或“其他漏洞简报”，并同步更新统计、处置建议和风险台账。记录快照生成时间；“未标记”不得写成“不存在”。
 
 ---
 
