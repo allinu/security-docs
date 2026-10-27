@@ -6,7 +6,7 @@
 - 构建命令：`cd /home/ubuntu/docs-site && ./.venv/bin/mkdocs build`（exit code 必须为 0）。
 - 每日日报：`docs/vulnerabilities/YYYY-MM-DD.md`，必须严格按 `daily_templates.md` 模板生成。
 - 多源汇总补充：`http://3.25.211.44:8080/report.html` 是 **NVD、CISA KEV、FIRST EPSS、OSV.dev、Exploit-DB、Nuclei、Metasploit、GitHub** 的聚合去重层，不是第九类独立统计源。以 CVE ID 为主键去重，保留各原始来源归属；对既有日报先保持原报告统计周期和完整结构，再从页面 `detail-data` JSON 以 `published`/`modified` 时间筛选窗口内记录。已收录 CVE 补充 PoC、KEV、EPSS 和原始链接，未收录但具风险或公开 PoC 的 CVE 按日报既有“漏洞详情”或“其他漏洞简报”结构补齐。页面未标记 PoC/KEV 只能写作“快照未标记”，不得推断为不存在。
-- VulnHOT 补充：优先使用匿名只读 API `https://vulnhot.com/api/v1/items?mode=selected&window=24h&by=published`；RSS 备用为 `https://vulnhot.com/feed.xml`（精选）与 `https://vulnhot.com/feed/daily.xml`（日报）。VulnHOT 是策展聚合源，按 `publishedAt` 划入统计窗口、按 CVE ID 或事件主题去重，并以 `links.original` 的原始通告/报道核验事实；其摘要或标签不能单独作为 PoC、在野利用或修复状态的结论。请求须遵循响应的 `Cache-Control`、`ETag`/`If-None-Match` 与 `Retry-After`。
+- VulnHOT 补充：优先使用匿名只读 API `https://vulnhot.com/api/v1/items?mode=selected&window=24h&by=published`；RSS 备用为 `https://vulnhot.com/feed.xml`（精选）、`https://vulnhot.com/feed/all.xml`（近 7 天已去重动态）与 `https://vulnhot.com/feed/daily.xml`（日报）。对在野利用、PoC、通告、供应链和事件，分别订阅 `https://vulnhot.com/feed/category/exploited.xml`、`poc.xml`、`advisory.xml`、`supply-chain.xml`、`incident.xml`。VulnHOT 是策展聚合源，按 `publishedAt` 划入统计窗口、按 CVE ID 或事件主题去重，并以 `links.original` 的原始通告/报道核验事实；其摘要或标签不能单独作为 PoC、在野利用或修复状态的结论。请求须遵循响应的 `Cache-Control`、`ETag`/`If-None-Match` 与 `Retry-After`。
 - 站点地址：https://docs.allinu.eu.org
 
 ## 部署链路（重要！）

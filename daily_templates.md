@@ -19,7 +19,7 @@ tags:
 
 > **多源汇总合并规则：** 汇总页是 **NVD、CISA KEV、FIRST EPSS、OSV.dev、Exploit-DB、Nuclei、Metasploit、GitHub** 的聚合去重视图，不作为独立第九源计数。先保留本期既定统计窗口、统计口径和章节结构，再使用 `detail-data` JSON 按 `published` 与 `modified` 筛选窗口内记录；以 CVE ID 为主键去重，保留命中的原始来源。已有 CVE 仅增补经核验的 PoC/KEV/EPSS/原始链接；未收录但具有足够风险或公开 PoC 的 CVE，必须依照本模板写入“漏洞详情”或“其他漏洞简报”，并同步更新统计、处置建议和风险台账。记录快照生成时间；“未标记”不得写成“不存在”。
 
-> **VulnHOT 使用规则：** 用 `mode=selected&window=24h&by=published` 的 API 结果或 RSS 作为情报线索，按 `publishedAt` 纳入窗口并按 CVE ID/事件主题去重。每个关键结论必须回溯并链接 `links.original` 指向的原始通告或报道；不得将 VulnHOT 摘要、分类或热点标签单独作为 PoC、在野利用、CVSS 或修复状态的证据。缓存请求使用 ETag 条件验证，并遵循服务端返回的轮询间隔与限流要求。
+> **VulnHOT 使用规则：** 用 `mode=selected&window=24h&by=published` 的 API 结果或 RSS 作为情报线索；`feed/all.xml` 是已去重的近 7 天动态，分类订阅可针对 `exploited`、`poc`、`advisory`、`supply-chain`、`incident`。按 `publishedAt` 纳入窗口并按 CVE ID/事件主题去重。每个关键结论必须回溯并链接 `links.original` 指向的原始通告或报道；不得将 VulnHOT 摘要、分类或热点标签单独作为 PoC、在野利用、CVSS 或修复状态的证据。缓存请求使用 ETag 条件验证，并遵循服务端返回的轮询间隔与限流要求。
 
 ---
 
