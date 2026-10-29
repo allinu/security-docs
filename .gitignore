@@ -11,3 +11,6 @@ site/
 # 系统文件
 .DS_Store
 *.swp
+
+# 本仓库的 Agent 工作区状态（本地记忆/任务记录，不入库）
+.workbuddy/
