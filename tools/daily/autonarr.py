@@ -510,7 +510,8 @@ def next_issue(day):
             if not fn.startswith("2026-") or not fn.endswith(".md"):
                 continue
             d = fn[:-3]
-            if d > day:
+            # 当天文件不参与推算：重生成时 else 会把本期自身当成基准，导致期次自增
+            if d >= day:
                 continue
             try:
                 txt = open(os.path.join(DOCS_VULN, fn), encoding="utf-8").read(1200)
