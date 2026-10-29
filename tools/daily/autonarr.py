@@ -843,7 +843,8 @@ def _extra_note(it, st, ep):
             return "Exploit-DB 已有可执行脚本，攻击者无需自行研究即可使用。"
         if it.get("nuclei"):
             return "Nuclei 已提供检测模板，**批量扫描会很快覆盖到暴露资产**，检出即可能伴随尝试性利用。"
-        return "已出现社区复现仓库，说明验证门槛不高，预计短期内会出现更多利用变体。"
+        # 此分支对应 GitHub 仓库或 NVD 参考链接的 Exploit 标记，不能一概说成“复现仓库”
+        return "已有公开的利用线索（PoC 仓库或带 Exploit 标记的参考链接），验证门槛不高，预计短期内会出现更多利用变体。"
     if ep and ep.get("epss", 0) > 0.3:
         return "EPSS 处于高位通常对应“已被扫描器批量覆盖”的状态，实际尝试可能已在发生。"
     if "PR:N" in v and "AV:N" in v:
