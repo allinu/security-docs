@@ -18,6 +18,17 @@ KEV_CAT = _load_kev()
 KEV_ALL = {v["cveID"]: v for v in KEV_CAT["vulnerabilities"]}
 
 
+def _refresh_kev():
+    """在渲染前重读 KEV 目录。
+
+    模块导入时采集阶段尚未运行，此时读到的是上一轮缓存的旧目录，
+    会导致正文累计数与 catalogVersion 滞后一天；渲染前必须重新加载。
+    """
+    global KEV_CAT, KEV_ALL
+    KEV_CAT = _load_kev()
+    KEV_ALL = {v["cveID"]: v for v in KEV_CAT["vulnerabilities"]}
+
+
 def kev_today(day):
     return [v for v in KEV_CAT["vulnerabilities"] if v["dateAdded"] == day]
 
@@ -313,6 +324,7 @@ def detail_section(n, it, gh, nar, day=None):
 
 
 def render(day, nar, outdir):
+    _refresh_kev()
     b = load(f"{D}/base/{day}.json")
     gh = load(f"{D}/gh/{day}.json", {})
     items = b["items"]

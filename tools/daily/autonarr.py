@@ -254,27 +254,125 @@ VENDOR_HINTS = [
 
 
 def _name_of(desc):
-    """从英文描述里推断产品名（NVD 当日数据常无 CPE，只能靠文本）"""
+    """从英文描述里推断产品名（NVD 当日数据常无 CPE，只能靠文本）
+
+    策略：先用固定句式精确截取，再退化为「取句首名词短语」——
+    逐词累积，遇到动词／介词／版本词等分句标记即停止，最多 5 个词。
+    宁可返回空（正文标注“受影响组件”），也不拼接跨句的误匹配。
+    """
     if not desc:
         return ""
     d = " ".join(desc.split())
+
     pats = [
-        r"[Tt]he ([A-Z][\w.\-]{1,30}(?: [A-Z][\w.\-]{1,20}){0,2}) (?:plugin|theme|extension|add-on|module) for",
-        r"vulnerability in ([A-Z][\w.\-]{1,30}(?: [A-Z][\w.\-]{1,20}){0,2})",
-        r"^([A-Z][\w.\-]{1,30}(?: [A-Z][\w.\-]{1,20}){0,2}) (?:plugin|theme|library|is |before |through |prior |v?\d)",
-        r"^([A-Z][\w.\-]{1,30}) (?:is|was|before|through|allows|contains)",
-        r"^([a-z][\w.\-]{1,24}) (?:is|was|before|through|allows|contains)",
-        r"[Tt]he ([A-Z][\w.\-]{1,30}) (?:plugin|theme|library)",
-        r"(?:in|for|of) ([A-Z][\w.\-]{1,24}) (?:before|through|versions?|v?\d)",
+        r"[Tt]he ((?:[A-Z][\w.\-]*|\d[\w.\-]*)(?: [A-Za-z][\w.\-]*){0,4}) "
+        r"(?:plugin|theme|extension|add-on|module|library)\b",
+        r"vulnerability in ((?:[A-Z][\w.\-]*)(?: [A-Za-z][\w.\-]*){0,4}?)"
+        r"(?=[,:.]| (?:before|through|prior|that|which|where|when|allows)\b)",
     ]
     for p in pats:
         m = re.search(p, d)
         if m:
-            name = m.group(1).strip(" .,:;")
-            if name.split()[0] in STOP or len(name) < 2:
-                continue
-            return name
-    return ""
+            name = _clean_name(m.group(1))
+            if name:
+                return name
+
+    # 句首名词短语：累积到分句动词/介词/版本词为止
+    toks = d.replace(",", " ,").split()
+    out = []
+    for t in toks:
+        low = t.lower().strip(".,:;")
+        if low in _NAME_CUT or t == ",":
+            break
+        # 所有格（"Apache Kafka's …"）之后即进入描述细节，就此截断
+        if low.endswith("'s") or low.endswith("’s"):
+            out.append(t.strip(".,:;'’"))
+            break
+        out.append(t.strip(".,:;"))
+        if len(out) >= 5:
+            break
+    return _clean_name(" ".join(out))
+
+
+_NAME_CUT = {
+    "is", "are", "was", "were", "be", "been", "being", "has", "have", "had",
+    "allows", "allow", "contains", "contain", "does", "do", "did", "not",
+    "fails", "fail", "validates", "validate", "permits", "enables", "accepts",
+    "exposes", "uses", "use", "suffers", "leads", "results", "due", "could",
+    "may", "might", "will", "would", "can", "should", "must",
+    "before", "through", "prior", "after", "versions", "version", "vulnerable",
+    "in", "on", "for", "of", "with", "via", "to", "by", "from", "at", "as",
+    "when", "where", "which", "that", "who", "whose", "if", "while", "because",
+    "plugin", "theme", "extension", "add-on", "module", "library", "software",
+    "and", "or", "but", "also", "there", "this", "these", "those",
+    "exposed", "affected", "vulnerable", "present", "exists", "exist",
+    "discovered", "found", "identified", "impacted", "addressed", "fixed",
+    "patched", "reachable", "exploitable", "installed", "configured",
+    "provides", "provide", "offers", "offer", "implements", "supports", "includes",
+    "sends", "receives", "stores", "loads", "performs", "writes", "reads",
+    "parses", "processes", "handles", "manages", "runs", "executes", "opens",
+    "creates", "deletes", "returns", "takes", "expects", "relies", "depends",
+    "several", "many", "most", "few", "both", "paths", "systems", "versions",
+    "restricts", "integrates", "integrate", "downloads", "uploads", "bypasses",
+    "skips", "trusts", "passes", "leaks", "redirects", "hosts", "serves",
+    "returns", "checks", "trusting", "accepting",
+}
+
+
+def _clean_name(raw):
+    """清洗候选产品名；不像产品名则返回空串"""
+    t = re.sub(r"\s+", " ", (raw or "").strip(" .,:;()[]'\"，、"))
+    if not t:
+        return ""
+    toks = t.split()
+    while toks and toks[-1].lower().strip(".,:;") in {
+            "for", "in", "of", "and", "or", "with", "on", "to", "via", "is", "are",
+            "the", "a", "an", "plugin", "theme", "software", "library",
+            "this", "these", "those", "its", "their", "such"}:
+        toks.pop()
+    # 去掉结尾的版本号（"Jenkins 2.587" → "Jenkins"）与形容词尾缀（"… Stack-based"）
+    while len(toks) > 1 and (re.match(r"^v?\d[\w.]*$", toks[-1])
+                             or re.search(r"(?:-based|related|driven|like)$", toks[-1].lower())):
+        toks.pop()
+    if not toks or len(toks) > 5:
+        return ""
+    if toks[0].lower() in _NAME_STOP or toks[0] in STOP:
+        return ""
+    if toks[0].lower() in _GENERIC_HEADS:
+        return ""
+    # 函数/类名片段不是产品名
+    if re.search(r"[()]|\._|_[a-z]|::[a-z]", t):
+        return ""
+    # 至少要有一个词具备“专有名词”特征：首字母大写/数字开头，或形如 jackson-databind
+    if not any(re.match(r"^[A-Z0-9]", x) or re.match(r"^[a-z][\w.]*-[\w.\-]+$", x)
+               for x in toks):
+        return ""
+    name = " ".join(toks)
+    return name if len(name) >= 2 else ""
+
+
+_NAME_STOP = {"the", "a", "an", "this", "these", "those", "it", "its", "their",
+              "affected", "multiple", "some", "various", "improper", "insecure",
+              "unspecified", "unknown", "certain", "all", "user", "users"}
+
+# 描述句首常以缺陷类型而非产品名开头，这些词不能当作产品名
+_GENERIC_HEADS = {
+    "memory", "buffer", "stack", "heap", "sql", "cross", "cross-site", "denial",
+    "improper", "insecure", "insufficient", "missing", "use", "out", "injection",
+    "command", "code", "path", "data", "database", "information", "sensitive",
+    "arbitrary", "remote", "local", "xml", "csv", "file", "files", "authentication",
+    "authorization", "privilege", "server-side", "open", "unauthenticated",
+    "vulnerability", "vulnerabilities", "multiple", "various", "affected", "certain",
+    "incorrect", "unrestricted", "uncontrolled", "unvalidated", "unprotected",
+    "svg", "html", "http", "json", "odoo", "php", "java", "python", "node",
+    "deserialization", "type", "input", "output", "access", "permission",
+    "certificate", "key", "token", "session", "header", "request", "response",
+    "version", "versions", "product", "software", "application", "component",
+    "system", "server", "client", "web", "website", "api", "plugin", "theme",
+    "link", "following", "certain", "specific", "particular", "crafted",
+    "insufficiently", "hardcoded", "hard-coded", "weak", "predictable",
+    "unintended", "unnecessary", "inadequate", "untrusted", "illegitimate",
+}
 
 
 def _prod(it):
