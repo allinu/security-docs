@@ -4,7 +4,7 @@ import json, os, sys, datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import DATA as D
-from gen import (CWE_MAP, sev_of, vtype, poc_of, priority, cond_table,
+from gen import (CWE_MAP, UNKNOWN_PROD, sev_of, vtype, poc_of, priority, cond_table,
                  attack_chain, fofa, epss_txt, kev_txt, guess_product)
 
 def _load_kev():
@@ -156,7 +156,7 @@ def detail_section(n, it, gh, nar, day=None):
     if dn.get("chain", True):
         it_chain = dict(it)
         it_chain["vendors"] = [v for v in vends if v != "NVD 未标注"] or ["目标厂商"]
-        it_chain["products"] = [x for x in prods if x not in ("见公告", "受影响组件")] or ["目标组件"]
+        it_chain["products"] = [x for x in prods if x not in ("见公告", UNKNOWN_PROD)] or ["目标组件"]
         a("**核心利用链：**")
         a("")
         a("```text")

@@ -6,6 +6,9 @@ from common import DATA as D, OUT_DIR as _OUT
 
 OUT = os.environ.get("VULN_OUT") or _OUT
 
+# 产品无法从 NVD 数据判定的统一表述（原先用“受影响组件”，在“影响产品”栏会自我指代）
+UNKNOWN_PROD = "未标注（NVD 未提供 CPE）"
+
 CWE_MAP = {
     "CWE-20": ("输入验证不当", "A03:2021 注入", "CAPEC-153"),
     "CWE-22": ("路径遍历", "A01:2021 访问控制失效", "CAPEC-126"),

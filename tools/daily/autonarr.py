@@ -12,7 +12,7 @@ from collections import Counter, OrderedDict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import DOCS_VULN, load, path  # noqa: E402
-from gen import CWE_MAP, poc_of, priority, sev_of, vtype  # noqa: E402  (vtype 为 CWE 映射，缺失时用 _type_of 兜底)
+from gen import CWE_MAP, UNKNOWN_PROD, poc_of, priority, sev_of, vtype  # noqa: E402  (vtype 为 CWE 映射，缺失时用 _type_of 兜底)
 
 WATCH = [
     "cisco", "fortinet", "paloaltonetworks", "vmware", "ivanti", "citrix", "f5",
@@ -258,7 +258,7 @@ def _name_of(desc):
 
     策略：先用固定句式精确截取，再退化为「取句首名词短语」——
     逐词累积，遇到动词／介词／版本词等分句标记即停止，最多 5 个词。
-    宁可返回空（正文标注“受影响组件”），也不拼接跨句的误匹配。
+    宁可返回空（正文标注 UNKNOWN_PROD），也不拼接跨句的误匹配。
     """
     if not desc:
         return ""
@@ -378,7 +378,7 @@ _GENERIC_HEADS = {
 def _prod(it):
     if it["products"]:
         return it["products"][0].replace("_", " ")
-    return _name_of(it["desc"]) or "受影响组件"
+    return _name_of(it["desc"]) or UNKNOWN_PROD
 
 
 def _vendor(it):
@@ -560,7 +560,7 @@ def build(day, base, gh, kev_cat):
     # ---------- 采集说明 ----------
     scored = sum(1 for i in items if i["cvss"]["score"] is not None)
     tv = Counter(_prod(i) for i in items)
-    unlabeled = tv.pop("受影响组件", 0)
+    unlabeled = tv.pop(UNKNOWN_PROD, 0)
     tv = Counter({k: v for k, v in tv.items() if v >= 2}) or Counter({"各类组件": 0})
     top_vend = tv.most_common(3) or [("无法统计", 0)]
     vend_note = ("NVD 本窗口多数条目尚未完成分析（无 CPE 与官方评分），厂商分布按描述文本推断，仅供参考。"
@@ -953,7 +953,7 @@ def _advice(items, sel, kev_new, p0, p1, poc_items, ep_max):
         a.append(f"已检出公开 PoC 的 **{len(poc_items)} 条**建议纳入本周补丁窗口；"
                  f"对已暴露实例回查近 7 天访问日志中的异常请求特征。")
     fams = Counter(_prod(i) for i in sel)
-    fams.pop("受影响组件", None)
+    fams.pop(UNKNOWN_PROD, None)
     fams = [(k, v) for k, v in fams.most_common(3) if v >= 2]
     if fams:
         a.append("集中出现的产品/组件（"
