@@ -542,6 +542,10 @@ def build(day, base, gh, kev_cat):
     epss_cov = sum(1 for i in items if i.get("epss"))
     p0 = [i for i in items if priority(i, poc_of(i, gh)[0], gh) == "P0"]
     p1 = [i for i in items if priority(i, poc_of(i, gh)[0], gh) == "P1"]
+    # P0/P1 只在当期 NVD 窗口内筛选，而 KEV 新增条目常发布于窗口之外（老漏洞新进目录），
+    # 所以「需紧急处置」必须额外并入这部分，否则正文与 1.1 表会对不上。
+    kev_new_ids = {v["cveID"] for v in kev_new}
+    urgent = len(p0) + len(p1) + len(kev_new_ids - {i["id"] for i in p0} - {i["id"] for i in p1})
 
     sel = pick(items, gh, want=8)
     detail_n = min(3, len(sel))
@@ -602,7 +606,13 @@ def build(day, base, gh, kev_cat):
         src_bits.append(f"外部情报源（多源汇总页）收录本期 `{ext_all}` 个编号、"
                         f"其中 `{ext_poc}` 个带 PoC 标记")
     if not (nuc or msfc or edbc or gh_hits):
-        src_bits.append("**四源均无命中，说明本期无已公开的可执行利用代码**")
+        poc_ref_n = sum(1 for i in items if i.get("poc_ref"))
+        if poc_ref_n:
+            src_bits.append(
+                f"四源检索均未命中；另有 `{poc_ref_n}` 条仅凭 NVD 参考链接中的 Exploit/PoC 标记计入"
+                f"「公开 PoC」，多为第三方托管的 poc 压缩包或仓库目录，未经独立验证")
+        else:
+            src_bits.append("**四源均无命中，说明本期无已公开的可执行利用代码**")
 
     ep_vals = [(i.get("epss") or {}).get("epss") for i in items]
     ep_vals = [v for v in ep_vals if v]
@@ -649,7 +659,7 @@ def build(day, base, gh, kev_cat):
            f"{'其中含可武器化的 Metasploit 模块或 Exploit-DB 利用，' if (msfc or edbc) else ''}"
            f"披露到可用的间隔正在持续缩短。" if poc_items else
            " 本期未检出可执行 PoC，但“无 PoC”不等于“难利用”，多数条目仍可由单个 HTTP 请求触发。")
-        + f" 需要紧急或 24 小时内处置（P0/P1）的条目共 {len(p0) + len(p1)} 条。"
+        + f" 需要紧急或 24 小时内处置（P0/P1）的条目共 {urgent} 条。"
     )
 
     if grade == "紧急":
@@ -724,9 +734,6 @@ def build(day, base, gh, kev_cat):
 
     # ---------- 处置建议 ----------
     advice = _advice(items, sel, kev_new, p0, p1, poc_items, ep_max)
-
-    kev_new_ids = {v["cveID"] for v in kev_new}
-    urgent = len(p0) + len(p1) + len(kev_new_ids - {i["id"] for i in p0} - {i["id"] for i in p1})
 
     return {
         "issue": next_issue(day),
